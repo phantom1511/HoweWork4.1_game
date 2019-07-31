@@ -62,7 +62,7 @@ public class Main {
         int to = 5;
         int randomHero = from + (int) (Math.random() * to);
         System.out.println("Tank blocked " + randomHero + " damage");
-        health[randomHero] = health[randomHero] + 20;
+        health[randomHero] = health[randomHero] += 20;
     }
 
     public static int medicHeal(int heroIndex) {
