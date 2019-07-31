@@ -56,8 +56,10 @@ public class Main {
     }
 
     public static int tankShoot() {
+        int from = 1;
+        int to = 5;
         Random random = new Random();
-        int randomHero = random.nextInt(health.length);
+        int randomHero = from + (int) (Math.random() * to);
         System.out.println("Tank blocked " + randomHero + " damage");
         return health[randomHero] + 20;
     }
