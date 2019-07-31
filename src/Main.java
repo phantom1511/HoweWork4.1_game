@@ -73,6 +73,7 @@ public class Main {
         } else {
             damage[0] = 50;
         }
+
     }
 
     public static void flash() {
