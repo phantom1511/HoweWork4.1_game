@@ -2,10 +2,10 @@ import java.util.Random;
 
 public class Main {
 
-    public static int[] health = {800, 300, 300, 300, 600, 300, 250}; //жизни нашего босса и героев
-    public static int[] damage = {50, 20, 20, 20, 10, 20, 10}; //уроны которын могут нанести наши герои и босса
-    public static String[] damageType = {"Physical", "Physical", "Magical", "Mental", "Shoot", "Dodge", "Heal"};
-    public static String[] heroes = {"Boss", "Warrior", "Magical", "Mental", "Tank", "Flash", "Medic"};
+    public static int[] health = {800, 300, 300, 300, 600, 300, 300, 250}; //жизни нашего босса и героев
+    public static int[] damage = {50, 20, 20, 20, 10, 20, 20, 10}; //уроны которын могут нанести наши герои и босса
+    public static String[] damageType = {"Physical", "Physical", "Magical", "Mental", "Shoot", "Dodge", "Return", "Heal"};
+    public static String[] heroes = {"Boss", "Warrior", "Magical", "Mental", "Tank", "Flash", "Berserk", "Medic"};
 
     public static void main(String[] args) {
 
@@ -16,6 +16,7 @@ public class Main {
             round();
             tankShoot();
             flash();
+            berserk();
             printStatistics();
         }
     }
@@ -27,7 +28,7 @@ public class Main {
     }
 
     public static void round() {
-        for (int i = 1; i <= 6; i++) {
+        for (int i = 1; i <= 7; i++) {
             int healthRemain = bossDamage(i);
             if (healthRemain < 0) {
                 health[i] = 0;
@@ -35,7 +36,7 @@ public class Main {
                 health[i] = healthRemain;
             }
         }
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 7; i++) {
             int healthRemain = heroesDamage(i);
             if (healthRemain < 0) {
                 health[0] = 0;
@@ -43,16 +44,22 @@ public class Main {
                 health[0] = healthRemain;
             }
         }
-        for (int i = 1; i <= 5; i++) {
-            if (health[6] > 0) {
+        for (int i = 1; i <= 6; i++) {
+            if (health[7] > 0) {
                 health[i] = medicHeal(i);
             } else {
-                health[6] = 0;
+                health[7] = 0;
             }
         }
 
         System.out.println("................................");
-        System.out.println("Medic healing all heroes for: " + damage[5]);
+        System.out.println("Medic healing all heroes for: " + damage[7]);
+    }
+
+    public static void berserk() {
+        health[6] = health[6] + (damage[0] -= 30);
+        health[0] = health[0] -= 20;
+        System.out.println(damage[6] + "----------------------------------");
     }
 
     public static void flash() {
@@ -67,14 +74,14 @@ public class Main {
 
     public static void tankShoot() {
         int from = 1;
-        int to = 6;
+        int to = 7;
         int randomHero = from + (int) (Math.random() * to);
         System.out.println("Tank blocked " + randomHero + " damage");
         health[randomHero] = health[randomHero] += 20;
     }
 
     public static int medicHeal(int heroIndex) {
-        return health[heroIndex] + damage[6];
+        return health[heroIndex] + damage[7];
     }
 
     public static int bossDamage(int heroIndex) {
@@ -101,7 +108,7 @@ public class Main {
             System.out.println("CONGRATULATIONS!!");
             return true;
         }
-        if (health[1] <= 0 && health[2] <= 0 && health[3] <= 0 && health[4] <= 0 && health[5] <= 0) {
+        if (health[1] <= 0 && health[2] <= 0 && health[3] <= 0 && health[4] <= 0 && health[5] <= 0 && health[6] <= 0 && health[7] <= 0) {
             System.out.println("Boss won the game!!");
             System.out.println("GAME OVER");
             return true;
@@ -118,7 +125,8 @@ public class Main {
         System.out.println("Mental health: " + health[3]);
         System.out.println("Tank health: " + health[4]);
         System.out.println("Flash health: " + health[5]);
-        System.out.println("Medic health: " + health[6]);
+        System.out.println("Berserk health: " + health[6]);
+        System.out.println("Medic health: " + health[7]);
         System.out.println("................................");
     }
 }
