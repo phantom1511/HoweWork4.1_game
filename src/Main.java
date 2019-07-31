@@ -57,12 +57,12 @@ public class Main {
         System.out.println("Medic healing all heroes for: " + damage[5]);
     }
 
-    public static void tankShoot(int heroIndex) {
+    public static void tankShoot() {
         int from = 1;
         int to = 5;
         int randomHero = from + (int) (Math.random() * to);
         System.out.println("Tank blocked " + randomHero + " damage");
-        health[heroIndex] + 20;
+        health[randomHero] = health[randomHero] + 20;
     }
 
     public static int medicHeal(int heroIndex) {
