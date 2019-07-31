@@ -2,10 +2,10 @@ import java.util.Random;
 
 public class Main {
 
-    public static int[] health = {800, 300, 300, 300, 600, 250}; //жизни нашего босса и героев
-    public static int[] damage = {50, 20, 20, 20, 10, 10}; //уроны которын могут нанести наши герои и босса
-    public static String[] damageType = {"Physical", "Physical", "Magical", "Mental", "Shoot", "Heal"};
-    public static String[] heroes = {"Boss", "Warrior", "Magical", "Mental", "Tank", "Medic"};
+    public static int[] health = {800, 300, 300, 300, 600, 300, 250}; //жизни нашего босса и героев
+    public static int[] damage = {50, 20, 20, 20, 10, 20, 10}; //уроны которын могут нанести наши герои и босса
+    public static String[] damageType = {"Physical", "Physical", "Magical", "Mental", "Shoot", "Dodge", "Heal"};
+    public static String[] heroes = {"Boss", "Warrior", "Magical", "Mental", "Tank", "Flash", "Medic"};
 
     public static void main(String[] args) {
 
@@ -15,6 +15,7 @@ public class Main {
             changeBossDefence();
             round();
             tankShoot();
+            flash();
             printStatistics();
         }
     }
@@ -26,7 +27,7 @@ public class Main {
     }
 
     public static void round() {
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 6; i++) {
             int healthRemain = bossDamage(i);
             if (healthRemain < 0) {
                 health[i] = 0;
@@ -34,7 +35,7 @@ public class Main {
                 health[i] = healthRemain;
             }
         }
-        for (int i = 1; i <= 4; i++) {
+        for (int i = 1; i <= 5; i++) {
             int healthRemain = heroesDamage(i);
             if (healthRemain < 0) {
                 health[0] = 0;
@@ -42,31 +43,38 @@ public class Main {
                 health[0] = healthRemain;
             }
         }
-        for (int i = 1; i <= 4; i++) {
-            if (health[5] > 0) {
+        for (int i = 1; i <= 5; i++) {
+            if (health[6] > 0) {
                 health[i] = medicHeal(i);
             } else {
-                health[5] = 0;
+                health[6] = 0;
             }
         }
-
-
-
 
         System.out.println("................................");
         System.out.println("Medic healing all heroes for: " + damage[5]);
     }
 
+    public static void flash() {
+        int yes = 2;
+        int no = 0;
+        int getShoot = no + (int) (Math.random() * yes);
+        System.out.println(getShoot);
+        if (getShoot == 1) {
+            health[5] = health[5] + damage[0];
+        }
+    }
+
     public static void tankShoot() {
         int from = 1;
-        int to = 5;
+        int to = 6;
         int randomHero = from + (int) (Math.random() * to);
         System.out.println("Tank blocked " + randomHero + " damage");
         health[randomHero] = health[randomHero] += 20;
     }
 
     public static int medicHeal(int heroIndex) {
-        return health[heroIndex] + damage[5];
+        return health[heroIndex] + damage[6];
     }
 
     public static int bossDamage(int heroIndex) {
@@ -109,7 +117,8 @@ public class Main {
         System.out.println("Magic health: " + health[2]);
         System.out.println("Mental health: " + health[3]);
         System.out.println("Tank health: " + health[4]);
-        System.out.println("Medic health: " + health[5]);
+        System.out.println("Flash health: " + health[5]);
+        System.out.println("Medic health: " + health[6]);
         System.out.println("................................");
     }
 }
